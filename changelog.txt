@@ -1,0 +1,4 @@
+Version: 1.0.0
+Date: 21. 08. 2024
+  Changes:
+    - First initialisation of the mod
