@@ -55,11 +55,11 @@ local function update_data(data, elem, flowname)
                 local name = flowname .. k
                 local flow = {
                     type = "flow",
-                    style_mods = {},
+                    style_mods = {vertically_squashable=true},
                     direction = "vertical",
                     {
                         type = "flow",
-                        style_mods = {},
+                        style_mods = {vertically_squashable=true},
                         direction = "horizontal",
                         {
                             type = "sprite-button",
@@ -75,17 +75,17 @@ local function update_data(data, elem, flowname)
                     },
                     {
                         type = "flow",
-                        style_mods = {},
+                        style_mods = {vertically_squashable=true},
                         name = name,
                         direction = "horizontal",
                         {
                             type = "line",
-                            style_mods = { font_color = { r = 0, g = 0, b = 0 } },
+                            style_mods = {vertically_squashable=true },
                             direction = "vertical"
                         },
                         {
                             type = "flow",
-                            style_mods = {},
+                            style_mods = {vertically_squashable=true},
                             name = name .. "flow",
                             direction = "vertical",
                         }
@@ -100,7 +100,7 @@ local function update_data(data, elem, flowname)
                 gui.add(elem[flowname],
                     {
                         type = "flow",
-                        style_mods = {},
+                        style_mods = {vertically_squashable=true},
                         direction = "horizontal",
                         {
                             type = "label",
@@ -112,7 +112,7 @@ local function update_data(data, elem, flowname)
             gui.add(elem[flowname],
                 {
                     type = "flow",
-                    style_mods = {},
+                    style_mods = {vertically_squashable=true},
                     direction = "horizontal",
                     {
                         type = "label",
@@ -151,7 +151,7 @@ local function on_button_copy_clicked(e)
         return
     else
         if item.is_item_with_tags then
-            player.cursor_stack.count=player.cursor_stack.count+1
+            player.cursor_stack.set_stack({name=item.name,count=item.count+1,tags=item.tags})
         else
             return
         end
@@ -191,8 +191,8 @@ local function toggle_visible(e)
 end
 
 local function created_duplicated_button()
-    if game.active_mods["Factor-y"] then
-        return action_button("copybutton",{"gui.copyag"}, {"gui.copytooltip"}, on_button_copy_clicked)
+    if game.active_mods["Factor-y"] then -- or modsettings ?
+        return action_button("copybutton",{"gui.copytag"}, {"gui.copytooltip"}, on_button_copy_clicked)
     else
         return {}
     end
@@ -212,7 +212,7 @@ function tagReader.build(player)
         type = "frame",
         name = "lihop_tagReader_Main",
         direction = "vertical",
-        style_mods = { size=300},
+        style_mods = { size={500,700}},
         elem_mods = { auto_center = true },
         {
             type = "flow",
@@ -237,11 +237,11 @@ function tagReader.build(player)
             {
                 type = "scroll-pane",
                 style = "flib_naked_scroll_pane_no_padding",
-                style_mods = { maximal_height = 400, horizontally_stretchable = true },
+                style_mods = {  horizontally_stretchable = true, },
                 {
                     type = "flow",
                     name = "tags_flow",
-                    style_mods = { vertical_spacing = 8, padding = 12 },
+                    style_mods = { vertical_spacing = 8, padding = 12,vertically_squashable=true },
                     direction = "vertical",
                 },
             },
@@ -255,6 +255,7 @@ function tagReader.build(player)
     local button_flow = mod_gui.get_button_flow(player) --[[@as LuaGuiElement]]
     gui.add(button_flow, {
         type = "sprite-button",
+        name="TagViewer",
         style = mod_gui.button_style,
         sprite = "lihop-tagviewer",
         handler = toggle_visible,
@@ -266,7 +267,7 @@ gui.add_handlers({
     toggle_visible = toggle_visible,
     on_button_data_clicked = on_button_data_clicked,
     on_button_table_clicked = on_button_table_clicked,
-    on_button_copy_clicked=on_button_copy_clicked
+    on_button_copy_clicked=on_button_copy_clicked,
 })
 
 
