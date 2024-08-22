@@ -11,4 +11,4 @@ Add a tool to read tags in items with it
 Open the tool with the button on top left corner
 **Click** with an item with tags to see it
 
-![](screenshots/use.png)
+![](screenshot/use.png)
