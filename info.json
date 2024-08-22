@@ -10,5 +10,5 @@
 	"base >=1.0",
     "flib >= 0.14.2"
 	],
-    "description": "This mod add a tool to read tags in item"
+    "description": "This mod add a tool to read tags in items"
 }
