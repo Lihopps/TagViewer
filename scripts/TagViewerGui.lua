@@ -136,6 +136,9 @@ local function on_button_data_clicked(e)
         if item.is_item_with_tags then
             local tag = item.tags
             update_data(tag, elems, "tags_flow")
+        elseif item.name=="lihop-factoryrecipe" then
+            local tag = item.get_blueprint_entity_tags(1)
+            update_data(tag, elems, "tags_flow")
         else
             update_data({"Not an Item with tags"}, elems, "tags_flow")
         end
