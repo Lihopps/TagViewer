@@ -146,22 +146,6 @@ local function on_button_data_clicked(e)
 end
 
 --- @param e EventData.on_gui_click
-local function on_button_copy_clicked(e)
-    local player = game.players[e.player_index]
-    if not player then return end
-    local item = player.cursor_stack
-    if not item or not item.valid or not item.valid_for_read then 
-        return
-    else
-        if item.is_item_with_tags then
-            player.cursor_stack.set_stack({name=item.name,count=item.count+1,tags=item.tags})
-        else
-            return
-        end
-    end
-end
-
---- @param e EventData.on_gui_click
 local function show(e, elems)
     elems.lihop_tagReader_Main.visible  = true
     game.players[e.player_index].opened = elems.lihop_tagReader_Main
@@ -190,14 +174,6 @@ local function toggle_visible(e)
             player.cursor_stack.set_stack({ name = "item-with-tags", count = 1 })
             player.cursor_stack.tags = { test = 1, tab = { a = 1, b = 2 } }
         end
-    end
-end
-
-local function created_duplicated_button()
-    if game.active_mods["Factor-y"] then -- or modsettings ?
-        return action_button("copybutton",{"gui.copytag"}, {"gui.copytooltip"}, on_button_copy_clicked)
-    else
-        return {}
     end
 end
 
@@ -235,7 +211,6 @@ function tagReader.build(player)
                 type = "frame",
                 style = "subheader_frame",
                 action_button("databutton",{"gui.seetag"}, {"gui.tagtooltip"}, on_button_data_clicked),
-                created_duplicated_button()
             },
             {
                 type = "scroll-pane",
@@ -270,7 +245,6 @@ gui.add_handlers({
     toggle_visible = toggle_visible,
     on_button_data_clicked = on_button_data_clicked,
     on_button_table_clicked = on_button_table_clicked,
-    on_button_copy_clicked=on_button_copy_clicked,
 })
 
 
